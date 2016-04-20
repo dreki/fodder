@@ -4,7 +4,8 @@
 fodder provides a new way to write applications. It looks like this:
 
 ```js
-// your features.js file. this is where you define all your app's features
+// your features.js file.
+// this is where you define all your app's features
 var feature = require('fodder').feature;
 feature('log in', function (when) {
   when('successful login', 'show user homepage');
