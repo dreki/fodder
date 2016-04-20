@@ -91,3 +91,7 @@ listen('add product to cart', function(data) {
     tellServerToPutItemInCard(data.item_id);
 });
 ```
+
+## installation
+
+Install fodder via npm: https://www.npmjs.com/package/fodder
