@@ -4,6 +4,8 @@ var listeners = {};
 /**@type {Object.<string, Array>}*/
 var bindings = {};
 
+/**@type {string}*/
+var currentFeature;
 
 /**
  * Denote that a feature is starting
@@ -30,12 +32,12 @@ function feature(name, cb) {
  */
 function fire(step, opts) {
   if (opts && opts.feature) {
-    fire.currentFeature = opts.feature;
+    currentFeature = opts.feature;
   }
   /** @type {Array} */
-  var boundListeners = bindings[fire.currentFeature + '.' + step];
+  var boundListeners = bindings[currentFeature + '.' + step];
   if (!boundListeners) {
-    console.warn('No listeners for ' + step + ' (feature ' + fire.currentFeature + ')');
+    console.warn('No listeners for ' + step + ' (feature ' + currentFeature + ')');
     return;
   }
   boundListeners.forEach(function (nextStep) {  // allow multiple listeners
@@ -49,6 +51,14 @@ function fire(step, opts) {
 }
 
 /**
+ * Signal that a certain feature is commencing
+ * @param {string} name
+ */
+function startFeature(name) {
+  currentFeature = name;
+}
+
+/**
  * Use this to tie a step to a section of functionality
  * @param {string} step
  * @param {Function} cb
@@ -57,4 +67,4 @@ function listen(step, cb) {
   listeners[step] = cb;
 }
 
-module.exports = {feature: feature, fire: fire, listen: listen};
+module.exports = {feature: feature, startFeature: startFeature, fire: fire, listen: listen};
