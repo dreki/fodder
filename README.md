@@ -74,3 +74,20 @@ feature('log in', function (when) {
   when('password not correct', 'show login error message');
 });
 ```
+
+Your "features.js" file is now your map of your whole application. When you want to create
+a new feature, you come here and define how it should work in plain English. Even your
+product designers will be able to understand how the application works.
+
+Other benefits include ultimate testability. Consider how easy it would be to pass in mock
+data to the 'add product to cart' step here:
+
+```js
+// controllers.js
+fire('add product to cart', {item: this.selectedItem});
+
+// cart.js
+listen('add product to cart', function(data) {
+    tellServerToPutItemInCard(data.item_id);
+});
+```

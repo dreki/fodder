@@ -46,7 +46,7 @@ function fire(step, opts) {
       console.error('No listener for ' + nextStep);
       return;
     }
-    cb();
+    cb(opts);
   });
 }
 
