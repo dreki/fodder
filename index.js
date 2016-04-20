@@ -57,8 +57,4 @@ function listen(step, cb) {
   listeners[step] = cb;
 }
 
-feature('log in', function (when) {
-  when('successful log in', 'show user settings');
-});
-
 module.exports = {feature: feature, fire: fire, listen: listen};
