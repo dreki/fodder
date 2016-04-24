@@ -92,6 +92,28 @@ listen('add product to cart', function(data) {
 });
 ```
 
+## more
+
+### fire an event when starting a feature
+
+You can have an event fire as soon as you call `startFeature`:
+
+```js
+var startFeature = require('fodder').startFeature;
+startFeature('user home page', 'load user data');
+```
+
+### fire multiple events
+
+You can use `when` to fire multiple events:
+
+```js
+feature('user home', function (when) {
+  when('user home loaded', 'show spinner', 'load user data');
+  when('user data loaded', 'display user data', 'hide spinner');
+});
+```
+
 ## installation
 
 Install fodder via npm: https://www.npmjs.com/package/fodder

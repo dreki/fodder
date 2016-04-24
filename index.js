@@ -13,12 +13,21 @@ var currentFeature;
  * @param {Function} cb
  */
 function feature(name, cb) {
-  function when(step, nextStep) {
-    var fullStep = name + '.' + step;
-    if (!bindings[fullStep]) {
-      bindings[fullStep] = [];
-    }
-    bindings[fullStep].push(nextStep);
+  /**
+   * After `step`, you may list as many events to fire as you wish
+   * @param {string} step
+   */
+  function when(step) {
+    // allow multiple steps to fire
+    var steps = Array.prototype.slice.call(arguments, 1);
+
+    steps.forEach(function (nextStep) {
+      var fullStep = name + '.' + step;
+      if (!bindings[fullStep]) {
+        bindings[fullStep] = [];
+      }
+      bindings[fullStep].push(nextStep);
+    });
   }
 
   cb(when);
@@ -53,9 +62,13 @@ function fire(step, opts) {
 /**
  * Signal that a certain feature is commencing
  * @param {string} name
+ * @param {string} event - An event to fire upon starting the feature
  */
-function startFeature(name) {
+function startFeature(name, event) {
   currentFeature = name;
+  if (event) {
+    fire(event);
+  }
 }
 
 /**
