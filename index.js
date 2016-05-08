@@ -84,7 +84,10 @@ function startFeature(name, event) {
   // fire the entree event first - if it exists
   var entree = featureEntrees[name];
   if (entree) {
-    fire(entree);
+    entree = listeners[entree];
+    if (entree) {
+      entree();
+    }
   }
   if (event) {
     fire(event);
