@@ -8,6 +8,12 @@ var bindings = {};
 var currentFeature;
 
 /**
+ * Listeners to call upon beginning features
+ * @type {Object.<string, string>}
+ */
+var featureEntrees = {};
+
+/**
  * Denote that a feature is starting
  * @param {string} name
  * @param {Function} cb
@@ -30,7 +36,16 @@ function feature(name, cb) {
     });
   }
 
-  cb(when);
+  /**
+   * Execute this step automatically when entering the feature
+   * @param  {string} stepName - The name of the step to execute
+   * @return {void}
+   */
+  function startWith(stepName) {
+    featureEntrees[name] = stepName;
+  }
+
+  cb(when, startWith);
 }
 
 /**
@@ -66,6 +81,11 @@ function fire(step, opts) {
  */
 function startFeature(name, event) {
   currentFeature = name;
+  // fire the entree event first - if it exists
+  var entree = featureEntrees[name];
+  if (entree) {
+    fire(entree);
+  }
   if (event) {
     fire(event);
   }
