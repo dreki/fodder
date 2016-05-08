@@ -94,7 +94,7 @@ listen('add product to cart', function(data) {
 
 ## more
 
-### fire an event when starting a feature
+### specify an event to fire when starting a feature
 
 You can have an event fire as soon as you call `startFeature`:
 
@@ -112,6 +112,15 @@ feature('user home', function (when) {
   when('user home loaded', 'show spinner', 'load user data');
   when('user data loaded', 'display user data', 'hide spinner');
 });
+```
+
+### automatically fire an event when starting a feature
+
+```js
+feature('read book', function(when, startWith) {
+  startWith('recite title of book');
+  when('user wants to read book', 'open book');
+})
 ```
 
 ## installation
