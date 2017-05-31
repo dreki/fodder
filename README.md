@@ -1,3 +1,7 @@
+I'm proud to say that fodder is being supported by BrowserStack!
+
+<img src="http://i.imgur.com/LMRz23i.png" height="30" alt="BrowserStack" />
+
 # fodder -- feature oriented development
 
 fodder provides a new way to write applications. It looks like this:
