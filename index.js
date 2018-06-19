@@ -65,8 +65,7 @@ function feature(name, cb) {
 /**
  * Call this to tell the feature to execute a new step
  * @param {string} step
- * @param {Object} [opts] - (optional)
- * @param {string} opts.feature - feature to start executing
+ * @param {Object} [opts] - Include `feature` to start executing a feature along with this step
  */
 function fire(step, opts) {
   if (opts && opts.feature) {
