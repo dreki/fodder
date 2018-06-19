@@ -14,6 +14,20 @@ var currentFeature;
 var featureEntrees = {};
 
 /**
+ * A function called when a listener isn't found for a step.
+ * @type {Function}
+ */
+var onListenerNotFound;
+
+/**
+ * Set a handler for when a step listener wasn't found.
+ * @param {Function} cb 
+ */
+function setOnListenerNotFound(cb) {
+  onListenerNotFound = cb;
+}
+
+/**
  * Denote that a feature is starting
  * @param {string} name
  * @param {Function} cb
@@ -51,7 +65,7 @@ function feature(name, cb) {
 /**
  * Call this to tell the feature to execute a new step
  * @param {string} step
- * @param {Object} opts - (optional)
+ * @param {Object} [opts] - (optional)
  * @param {string} opts.feature - feature to start executing
  */
 function fire(step, opts) {
@@ -61,13 +75,23 @@ function fire(step, opts) {
   /** @type {Array} */
   var boundListeners = bindings[currentFeature + '.' + step];
   if (!boundListeners) {
-    console.warn('No listeners for ' + step + ' (feature ' + currentFeature + ')');
+    const message = 'No listeners for ' + step + ' (feature ' + currentFeature + ')';
+    if (onListenerNotFound) {
+      onListenerNotFound(message);
+      return;
+    }
+    console.warn(message);
     return;
   }
   boundListeners.forEach(function (nextStep) {  // allow multiple listeners
     var cb = listeners[nextStep];
     if (!cb) {
-      console.error('No listener for ' + nextStep);
+      const message = 'No listener for ' + nextStep;
+      if (onListenerNotFound) {
+        onListenerNotFound(message);
+        return;
+      }
+      console.error(message);
       return;
     }
     cb(opts);
@@ -77,7 +101,7 @@ function fire(step, opts) {
 /**
  * Signal that a certain feature is commencing
  * @param {string} name
- * @param {string} event - An event to fire upon starting the feature
+ * @param {string} [event] - An event to fire upon starting the feature
  */
 function startFeature(name, event) {
   currentFeature = name;
@@ -103,4 +127,4 @@ function listen(step, cb) {
   listeners[step] = cb;
 }
 
-module.exports = {feature: feature, startFeature: startFeature, fire: fire, listen: listen};
+module.exports = { feature: feature, startFeature: startFeature, fire: fire, listen: listen };

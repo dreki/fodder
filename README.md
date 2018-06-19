@@ -127,6 +127,14 @@ feature('read book', function(when, startWith) {
 })
 ```
 
+### get notified when a handler for a specific step couldn't be found.
+
+```js
+setOnListenerNotFound(function(msg) {
+  console.warn('Tinderbox didn\'t find a step handler. It said: ' + msg);
+});
+```
+
 ## installation
 
 Install fodder via npm: https://www.npmjs.com/package/fodder
