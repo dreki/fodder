@@ -77,7 +77,7 @@ function fire(step, opts) {
   if (!boundListeners) {
     const message = 'No listeners for ' + step + ' (feature ' + currentFeature + ')';
     if (onListenerNotFound) {
-      onListenerNotFound(message);
+      onListenerNotFound(message, opts);
       return;
     }
     console.warn(message);
@@ -88,7 +88,7 @@ function fire(step, opts) {
     if (!cb) {
       const message = 'No listener for ' + nextStep;
       if (onListenerNotFound) {
-        onListenerNotFound(message);
+        onListenerNotFound(message, opts);
         return;
       }
       console.error(message);
