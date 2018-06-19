@@ -127,4 +127,7 @@ function listen(step, cb) {
   listeners[step] = cb;
 }
 
-module.exports = { feature: feature, startFeature: startFeature, fire: fire, listen: listen };
+module.exports = {
+  feature: feature, startFeature: startFeature, fire: fire, listen: listen,
+  setOnListenerNotFound: setOnListenerNotFound
+};
